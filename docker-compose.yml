@@ -1,0 +1,69 @@
+# Docker Compose for Enterprise Agentic Platform
+# Use this for easy deployment with customizable branding
+#
+# Usage:
+#   docker-compose up --build
+#   docker-compose up -d  (run in background)
+#   docker-compose down   (stop)
+
+version: '3.8'
+
+services:
+  agent-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: enterprise-agent-platform:latest
+    container_name: agent-platform
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      # API Configuration (REQUIRED)
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      
+      # Model Configuration
+      - MODEL_NAME=${MODEL_NAME:-gemini-2.5-flash}
+      
+      # Branding Configuration (Customize these!)
+      - COMPANY_NAME=${COMPANY_NAME:-Agent Platform}
+      - PROJECT_NAME=${PROJECT_NAME:-Enterprise Agentic Platform}
+      - PRIMARY_COLOR=${PRIMARY_COLOR:-#0066B3}
+      - SECONDARY_COLOR=${SECONDARY_COLOR:-#1E3A8A}
+      - ACCENT_COLOR=${ACCENT_COLOR:-#0EA5E9}
+      - MASCOT_NAME=${MASCOT_NAME:-Marina}
+      
+      # Server Configuration
+      - HOST=0.0.0.0
+      - PORT=8000
+    
+    # Mount skills directory for hot-reloading skills
+    volumes:
+      - ./.skills:/app/.skills:ro
+      # Uncomment to use custom config:
+      # - ./config.yaml:/app/config.yaml:ro
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    restart: unless-stopped
+
+  # Optional: Add a reverse proxy for production
+  # nginx:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #   depends_on:
+  #     - agent-platform
+  #   restart: unless-stopped
+
+networks:
+  default:
+    name: agent-network

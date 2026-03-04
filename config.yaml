@@ -1,0 +1,77 @@
+# Enterprise Agentic Platform - Configuration File
+# This file can be customized and passed to the container
+
+# Company/Team Information
+company_name: "Agent Platform"
+project_name: "Enterprise Agentic Platform"
+tagline: "Powered by Google ADK"
+
+# Color Palette
+# These colors will be used throughout the UI
+primary_color: "#0066B3"        # Marine Blue
+primary_dark: "#004C85"
+primary_light: "#0080D4"
+secondary_color: "#1E3A8A"       # Ultramar Blue
+secondary_dark: "#152a66"
+secondary_light: "#2563EB"
+accent_color: "#0EA5E9"          # Sky Blue
+background_color: "#F0F7FF"
+text_primary: "#1E3A5F"
+text_secondary: "#475569"
+
+# Mascot Configuration
+mascot_name: "Marina"
+mascot_path: "/mascot"
+mascot_idle: "mascot-idle.svg"
+mascot_thinking: "mascot-thinking.svg"
+mascot_error: "mascot-error.svg"
+
+# Skills Configuration
+skills:
+  skills_dir: ".skills"
+  auto_reload: true
+  reload_interval: 30
+
+# Model Configuration
+model:
+  provider: "google"
+  model_name: "gemini-2.5-flash"
+  api_key_env: "GOOGLE_API_KEY"
+  temperature: 0.7
+  max_tokens: 2048
+
+# Workflow Definitions
+workflows:
+  data_analysis:
+    name: "Data Analysis"
+    description: "Analyze data, generate insights, create charts"
+    tools:
+      - data_query
+      - chart_generator
+      - report_builder
+  code_gen:
+    name: "Code Generation"
+    description: "Write, review, and debug code"
+    tools:
+      - code_writer
+      - code_reviewer
+      - bug_detector
+  research:
+    name: "Research"
+    description: "Search and summarize information"
+    tools:
+      - web_search
+      - content_summarizer
+      - citation_generator
+  general_chat:
+    name: "General Chat"
+    description: "General conversation and assistance"
+    tools: []
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins:
+    - "*"

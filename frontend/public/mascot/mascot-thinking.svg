@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066B3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E3A8A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bellyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0F2FE;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BAE6FD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Body shadow -->
+  <ellipse cx="105" cy="155" rx="50" ry="15" fill="rgba(0,0,0,0.1)"/>
+
+  <!-- Main body (whale shape) -->
+  <path d="M 160 100
+           Q 165 70 145 55
+           Q 120 35 85 40
+           Q 50 45 40 70
+           Q 30 95 45 115
+           Q 60 135 100 140
+           Q 140 145 160 125
+           Q 175 110 160 100Z"
+        fill="url(#bodyGradient)"/>
+
+  <!-- Belly -->
+  <path d="M 145 95
+           Q 140 80 115 75
+           Q 85 72 65 80
+           Q 50 88 55 105
+           Q 70 125 100 128
+           Q 135 130 145 110
+           Q 152 100 145 95Z"
+        fill="url(#bellyGradient)"/>
+
+  <!-- Tail -->
+  <path d="M 40 75 Q 20 60 25 50 Q 35 55 45 70Z" fill="url(#bodyGradient)"/>
+  <path d="M 45 100 Q 20 105 25 120 Q 35 110 50 105Z" fill="url(#bodyGradient)"/>
+
+  <!-- Dorsal fin -->
+  <path d="M 120 55 Q 130 35 115 40 Q 110 50 115 60Z" fill="url(#bodyGradient)"/>
+
+  <!-- Thinking eye (looking up) -->
+  <ellipse cx="130" cy="85" rx="12" ry="14" fill="white"/>
+  <ellipse cx="130" cy="82" rx="6" ry="7" fill="#1E3A5F"/>
+  <circle cx="128" cy="79" r="2" fill="white"/>
+
+  <!-- Eye (right) -->
+  <ellipse cx="145" cy="90" rx="5" ry="6" fill="white"/>
+  <ellipse cx="145" cy="88" rx="3" ry="4" fill="#1E3A5F"/>
+
+  <!-- Thinking expression (small o mouth) -->
+  <ellipse cx="138" cy="110" rx="6" ry="7" fill="#1E3A5F"/>
+
+  <!-- Thought bubbles -->
+  <g fill="#E0F2FE" stroke="#0066B3" stroke-width="1">
+    <circle cx="175" cy="40" r="6">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="165" cy="25" r="10">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" begin="0.2s"/>
+    </circle>
+    <circle cx="150" cy="10" r="15">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" begin="0.4s"/>
+    </circle>
+  </g>
+
+  <!-- Thinking symbols -->
+  <text x="142" y="16" font-size="12" fill="#0066B3">?</text>
+  <text x="148" y="8" font-size="10" fill="#0EA5E9">?</text>
+
+  <!-- Blowhole -->
+  <ellipse cx="100" cy="52" rx="5" ry="3" fill="#0EA5E9"/>
+
+  <!-- Sparkle accents -->
+  <g fill="#06B6D4">
+    <circle cx="70" cy="65" r="3" opacity="0.6"/>
+    <circle cx="85" cy="58" r="2" opacity="0.5"/>
+  </g>
+
+  <!-- Cheek blush -->
+  <ellipse cx="118" cy="100" rx="8" ry="4" fill="#FDA4AF" opacity="0.4"/>
+</svg>
