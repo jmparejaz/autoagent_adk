@@ -70,6 +70,14 @@ class Session(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.now)
 
 
+class Workflow(BaseModel):
+    """A workflow definition that can be used as a skill."""
+    name: str
+    description: str
+    steps: List[Dict[str, Any]]
+    inputs: List[Dict[str, Any]] = []
+
+
 class ChatRequest(BaseModel):
     """Chat request payload."""
     message: str

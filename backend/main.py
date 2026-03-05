@@ -69,22 +69,29 @@ async def lifespan(app: FastAPI):
     # Initialize skill loader with configured skills directory
     skill_loader = get_skill_loader(app_config.skills.skills_dir)
     print(f"Loaded {len(skill_loader.get_all_skills())} skills")
+    
+    # Get all ADK tools (builtin + dynamic skills)
+    adk_tools = list(skill_loader.get_all_adk_tools().values())
 
     # Initialize intent classifier
     intent_classifier = get_intent_classifier()
 
     # Initialize workflow planner
-    workflow_planner = get_workflow_planner(
-        #skill_loader=skill_loader
-        )
+    workflow_planner = get_workflow_planner()
 
-    # Initialize tool executor
-    tool_executor = get_tool_executor(skill_loader)
+    # Initialize tool executor with dynamic tools
+    tool_executor = get_tool_executor(tools=adk_tools)
 
     # Register all workflows
     register_all_workflows()
     workflow_registry = get_workflow_registry()
     print(f"Registered {len(workflow_registry.get_all_workflows())} workflows")
+
+    # Register workflows as tools in the tool executor (Workflow-as-Skill)
+    workflow_tools = workflow_registry.get_adk_tools()
+    for tool in workflow_tools:
+        tool_executor.register_tool(tool)
+    print(f"Registered {len(workflow_tools)} workflows as dynamic ADK tools")
 
     yield
 

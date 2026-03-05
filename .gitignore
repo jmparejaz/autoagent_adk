@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Node.js
+node_modules/
+
+# Logs
+*.log
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
+# Frontend build
+frontend/dist/
+frontend/.vite/
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.tmp

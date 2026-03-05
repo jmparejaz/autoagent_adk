@@ -1,5 +1,8 @@
 """
 Skill Loader - Loads and parses markdown skill definitions from .skills folder.
+
+This module now includes automatic ADK tool conversion for seamless integration
+with Google ADK agents.
 """
 
 import os
@@ -8,18 +11,21 @@ import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
 from backend.models.schemas import Skill
+from backend.agents.adk_adapter import markdown_skill_to_adk_tool, HybridToolRegistry, FunctionTool
 
 
 class SkillLoader:
-    """Loads and manages skills from markdown files."""
+    """Loads and manages skills from markdown files with ADK integration."""
 
     def __init__(self, skills_dir: str = ".skills"):
         self.skills_dir = Path(skills_dir)
         self.skills: Dict[str, Skill] = {}
+        self.adk_tools: Dict[str, FunctionTool] = {}
+        self.tool_registry = HybridToolRegistry()
         self._loaded = False
 
     def load_skills(self) -> Dict[str, Skill]:
-        """Load all skills from the .skills directory."""
+        """Load all skills from the .skills directory and convert to ADK tools."""
         if not self.skills_dir.exists():
             print(f"Warning: Skills directory {self.skills_dir} does not exist")
             return self.skills
@@ -29,7 +35,16 @@ class SkillLoader:
                 skill = self._parse_skill_file(md_file)
                 if skill:
                     self.skills[skill.tool_name] = skill
-                    print(f"Loaded skill: {skill.tool_name}")
+                    
+                    # Convert skill to ADK tool and register it
+                    try:
+                        adk_tool = markdown_skill_to_adk_tool(skill)
+                        self.adk_tools[skill.tool_name] = adk_tool
+                        self.tool_registry.register_skill_tool(skill)
+                        print(f"Loaded skill and converted to ADK tool: {skill.tool_name}")
+                    except Exception as e:
+                        print(f"Warning: Could not convert skill '{skill.tool_name}' to ADK tool: {e}")
+                        print(f"Loaded skill: {skill.tool_name}")
             except Exception as e:
                 print(f"Error loading skill from {md_file}: {e}")
 
@@ -84,6 +99,18 @@ class SkillLoader:
             self.load_skills()
         return self.skills
 
+    def get_all_adk_tools(self) -> Dict[str, FunctionTool]:
+        """Get all ADK tools generated from skills."""
+        if not self._loaded:
+            self.load_skills()
+        return self.adk_tools
+
+    def get_tool_registry(self) -> HybridToolRegistry:
+        """Get the hybrid tool registry."""
+        if not self._loaded:
+            self.load_skills()
+        return self.tool_registry
+
     def get_skills_by_category(self, category: str) -> List[Skill]:
         """Get all skills in a specific category."""
         if not self._loaded:
@@ -91,8 +118,10 @@ class SkillLoader:
         return [s for s in self.skills.values() if s.category == category]
 
     def reload(self):
-        """Reload all skills from disk."""
+        """Reload all skills from disk and regenerate ADK tools."""
         self.skills.clear()
+        self.adk_tools.clear()
+        self.tool_registry = HybridToolRegistry()
         self._loaded = False
         self.load_skills()
 
