@@ -1,0 +1,47 @@
+[project]
+name = "nexus-adk-platform"
+version = "1.0.0"
+description = "Nexus ADK Enterprise Platform - Multimodal Agentic System"
+requires-python = ">=3.10"
+dependencies = [
+    "google-adk>=1.0.0",
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "psycopg2-binary>=2.9.9",
+    "sqlalchemy>=2.0.25",
+    "pandas>=2.2.0",
+    "numpy>=1.26.3",
+    "plotly>=5.19.0",
+    "pillow>=10.2.0",
+    "pypdf>=3.17.4",
+    "python-multipart>=0.0.6",
+    "chromadb>=0.4.22",
+    "pydantic>=2.5.3",
+    "pydantic-settings>=2.1.0",
+    "httpx>=0.26.0",
+    "sse-starlette>=2.0.0",
+    "leafmap>=0.33.0",
+    "folium>=0.16.0",
+    "geopandas>=0.14.2",
+    "shapely>=2.0.2",
+    "python-docx>=1.1.0",
+    "faiss-cpu>=1.7.4",
+    "tenacity>=8.2.3",
+    "cryptography>=41.0.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.4",
+    "pytest-asyncio>=0.23.3",
+    "black>=24.1.1",
+    "ruff>=0.1.14",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []
